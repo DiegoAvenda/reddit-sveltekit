@@ -14,6 +14,7 @@
 {#each data.comments as comment}
   <div class="static mt-10 m-2">
     <CardComment
+      postId={comment.post.id}
       message={comment.message}
       username={comment.user.name}
       likes={comment.likes.length}
@@ -23,30 +24,33 @@
 
     {#if comment.children}
       {#each comment.children as son}
-        <div class="relative mb-4 left-10 top-4">
+        <div class="relative mt-10 mb-4 left-10 top-4">
           <CardComment
-            class=""
             son={true}
+            postId={data.comments[0].post.id}
             message={son.message}
             username={son.user.name}
             likes={son.likes.length}
             commentId={son.id}
             userId={son.userId}
           />
+
+          {#if son.children}
+            {#each son.children as nieto}
+              <div class="relative mb-4 left-10 top-4">
+                <CardComment
+                  nieto={true}
+                  message={nieto.message}
+                  postId={data.comments[0].post.id}
+                  username={nieto.user.name}
+                  likes={nieto.likes.length}
+                  commentId={nieto.id}
+                  userId={nieto.userId}
+                />
+              </div>
+            {/each}
+          {/if}
         </div>
-        <!--
-      {#if kid.children}
-        {#each kid.children as nieto}
-          <CardComment
-            message={nieto.message}
-            username={nieto.user.name}
-            likes={nieto.likes.length}
-            commentId={nieto.id}
-            userId={nieto.userId}
-          />
-        {/each}
-      {/if}
-  -->
       {/each}
     {/if}
   </div>

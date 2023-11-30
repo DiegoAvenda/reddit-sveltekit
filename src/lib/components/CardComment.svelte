@@ -4,6 +4,7 @@
   export let likes
   export let commentId
   export let userId
+  export let postId
   export let son
   export let nieto
 </script>
@@ -23,15 +24,15 @@
         >
         <br />
         <input type="hidden" name="parentId" value={commentId} />
+        <input type="hidden" name="postId" value={postId} />
         <input type="hidden" name="userId" value={userId} />
-        <input type="text" name="message" placeholder="leave a comment" />
-        <button class="btn btn-primary" type="submit">Send</button>
+        {#if !nieto}
+          <input type="text" name="message" placeholder="leave a comment" />
+          <button class="btn btn-primary" type="submit">Send</button>
+        {/if}
       </form>
       {#if son}
         <p>I am a son</p>
-      {/if}
-      {#if nieto}
-        <p>I am a nieto</p>
       {/if}
     </div>
   </div>
