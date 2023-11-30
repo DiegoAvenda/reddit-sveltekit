@@ -3,23 +3,16 @@ import db from '$lib/prisma'
 export const load = async ({ params }) => {
   let comments = await db.comment.findMany({
     where: { postId: params.slug, parentId: null },
-    select: {
-      user: { select: { name: true, id: true } },
-      post: { select: { author: { select: { name: true } } } },
-      userId: true,
-      likes: true,
-      message: true,
-      id: true,
+    include: {
+      user: true,
+      post: { include: { author: true } },
       children: {
-        select: {
-          user: { select: { name: true, id: true } },
-          post: { select: { author: true } },
-          userId: true,
+        include: {
+          user: true,
           likes: true,
-          message: true,
-          id: true,
         },
       },
+      likes: true,
     },
   })
 
